@@ -1,0 +1,28 @@
+{
+  "name": "customer-data-api-cypress-tests",
+  "version": "1.0.0",
+  "description": "customer-data-api automated test cases",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run"
+  },
+  "keywords": [
+    "api",
+    "testing",
+    "cypress",
+    "e2e",
+    "testing"
+  ],
+  "author": "Tatiane Moreira",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@shelex/cypress-allure-plugin": "^2.40.2",
+    "allure-commandline": "^2.29.0",
+    "chai-json-schema": "^1.5.1",
+    "cypress": "^12.12.0",
+    "cypress-plugin-api": "^2.11.1",
+    "dotenv": "^16.4.5",
+    "js-base64": "^3.7.7"
+  }
+}

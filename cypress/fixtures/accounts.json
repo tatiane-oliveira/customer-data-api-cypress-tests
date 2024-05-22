@@ -1,0 +1,30 @@
+{
+  "consents": {
+    "create": {
+      "accounts": {
+        "data": {
+          "permissions": "ACCOUNTS_READ",
+          "expirationDateTime": ""
+        }
+      },
+      "creditCard": {
+        "data": {
+          "permissions": "CREDIT_CARD_READ",
+          "expirationDateTime": ""
+        }
+      }
+    },
+    "update": {
+      "authorize": {
+        "data": {
+          "status": "AUTHORISED"
+        }
+      },
+      "reject": {
+        "data": {
+          "status": "REJECTED"
+        }
+      }
+    }
+  }
+}
