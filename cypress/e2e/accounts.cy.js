@@ -16,8 +16,8 @@ describe("GET /accounts/v1/accounts", () => {
 
     it("should sucessfully return accounts data when authenticated", () => {
       cy.getAccounts(Cypress.env("token")).then((response) => {
-        expect(response.status).to.be.eq(200);
         cy.log(JSON.stringify(response.body));
+        expect(response.status).to.be.eq(200);
         const { data } = response.body;
         expect(data).is.not.empty;
       });
@@ -25,8 +25,8 @@ describe("GET /accounts/v1/accounts", () => {
 
     it("should return accounts data in the expected JSON schema", () => {
       cy.getAccounts(Cypress.env("token")).then((response) => {
-        expect(response.headers["content-type"]).to.eq("application/json");
         cy.log(JSON.stringify(response.body));
+        expect(response.headers["content-type"]).to.eq("application/json");
         const { data } = response.body;
         expect(data).to.be.an("Array");
 
@@ -56,6 +56,36 @@ describe("GET /accounts/v1/accounts", () => {
   });
 
   context("Negative and Edge scenarios", () => {
+
+    it("should fails with 403 (Forbidden) status code when send a POST request", () => {
+     cy.wrap(createAuthorizedConsentAccountsRead())
+      .then(() => {
+        cy.postAccounts(Cypress.env("token")).then((response) => {
+          cy.log(JSON.stringify(response.body));
+          expect(response.status).to.be.eq(403);
+        });
+      })  
+    });
+
+    it("should fails with 403 (Forbidden) status code when send a PUT request", () => {
+      cy.wrap(createAuthorizedConsentAccountsRead())
+       .then(() => {
+         cy.putAccounts(Cypress.env("token")).then((response) => {
+           cy.log(JSON.stringify(response.body));
+           expect(response.status).to.be.eq(403);
+         });
+       })  
+     });
+
+     it("should fails with 403 (Forbidden) status code when send a DELETE request", () => {
+      cy.wrap(createAuthorizedConsentAccountsRead())
+       .then(() => {
+         cy.deleteAccounts(Cypress.env("token")).then((response) => {
+           cy.log(JSON.stringify(response.body));
+           expect(response.status).to.be.eq(403);
+         });
+       })  
+     });
     it("should fails with 401 (Unauthorized) status code when there is no Authorization header", () => {
       cy.getAccounts(undefined).then((response) => {
         cy.log(JSON.stringify(response.body));
@@ -104,19 +134,23 @@ describe("GET /accounts/v1/accounts", () => {
     });
 
     it("should fails with 403 (Forbidden) status code when consent is not ACCOUNTS_READ", () => {
-      createAuthorizedConsentCrediCardRead();
-      cy.getAccounts(Cypress.env("token")).then((response) => {
-        cy.log(JSON.stringify(response.body));
-        expect(response.status).to.be.eq(403);
-      });
+      cy.wrap(createAuthorizedConsentCrediCardRead())
+        .then(() => {
+          cy.getAccounts(Cypress.env("token")).then((response) => {
+            cy.log(JSON.stringify(response.body));
+            expect(response.status).to.be.eq(403);
+          });
+        })
     });
 
     it("should fails with 403 (Forbidden) status code when consent status is REJECTED", () => {
-      createRejectedConsentAccountsRead();
-      cy.getAccounts(Cypress.env("token")).then((response) => {
-        cy.log(JSON.stringify(response.body));
-        expect(response.status).to.be.eq(403);
-      });
+      cy.wrap(createRejectedConsentAccountsRead())
+      .then(() => {
+        cy.getAccounts(Cypress.env("token")).then((response) => {
+          cy.log(JSON.stringify(response.body));
+          expect(response.status).to.be.eq(403);
+        });
+      })
     });
   });
 });
@@ -183,6 +217,30 @@ describe("GET /accounts/v1/account/{accountId}", () => {
           cy.log(JSON.stringify(response.body));
           Cypress.env("accountData", response.body.data[0]);
         });
+      });
+    });
+
+    it("should fails with 403 (Forbidden) status code when send a POST request", () => {
+      const account = Cypress.env("accountData");
+      cy.postAccount(Cypress.env("token"), account.id).then((response) => {
+        cy.log(JSON.stringify(response.body));
+        expect(response.status).to.eq(403);
+      });
+    });
+
+    it("should fails with 403 (Forbidden) status code when send a PUT request", () => {
+      const account = Cypress.env("accountData");
+      cy.putAccount(Cypress.env("token"), account.id).then((response) => {
+        cy.log(JSON.stringify(response.body));
+        expect(response.status).to.eq(403);
+      });
+    });
+
+    it("should fails with 403 (Forbidden) status code when send a DELETE request", () => {
+      const account = Cypress.env("accountData");
+      cy.deleteAccount(Cypress.env("token"), account.id).then((response) => {
+        cy.log(JSON.stringify(response.body));
+        expect(response.status).to.eq(403);
       });
     });
 
