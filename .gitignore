@@ -4,9 +4,6 @@
 ### Allure ###
 allure-results/
 
-### dotenv ###
-.env
-
 ### Node ###
 # Logs
 logs
