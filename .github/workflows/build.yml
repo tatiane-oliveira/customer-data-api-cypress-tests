@@ -16,7 +16,7 @@ jobs:
         - name: Checkout
           run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
         - name: Run API
-          run: make run-local
+          run: cd customer-data-api-java && make run-local
     cypress-run:
         needs: build
         runs-on: ubuntu-22.04
