@@ -1,7 +1,7 @@
-name: API testing
+name: Build and test
 on: push
 jobs:
-    build:
+    cypress-run:
         runs-on: ubuntu-22.04
         steps:
         - name: Checkout sources
@@ -17,20 +17,16 @@ jobs:
           uses: gradle/actions/setup-gradle@v3
 
         - name: Checkout
-          run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
+          run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git && cd customer-data-api-java
 
-        - name: Build API image
-          run: cd customer-data-api-java && docker build -t customer-api-server . && docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server
-    cypress-run:
-        needs: build
-        runs-on: ubuntu-22.04
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v4
-          # Install npm dependencies, cache them correctly
-          # and run all Cypress tests
-          - name: Cypress run
-            uses: cypress-io/github-action@v6
-            with:
-              command: npm run test
-              wait-on: 'http://localhost:8080'
+        - name: Build docker
+          run:  docker build -t customer-api-server .
+          
+        - name: Run container in background
+          run:  docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server && cd ..
+
+        - name: Cypress run
+          uses: cypress-io/github-action@v6
+          with:
+            command: npm run test
+            wait-on: 'http://localhost:8080'
