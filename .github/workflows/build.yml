@@ -6,17 +6,21 @@ jobs:
         steps:
         - name: Checkout sources
           uses: actions/checkout@v4
+          
         - name: Setup Java
           uses: actions/setup-java@v4
           with:
             distribution: 'corretto'
             java-version: 17
+
         - name: Setup Gradle
           uses: gradle/actions/setup-gradle@v3
+
         - name: Checkout
           run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
-        - name: Run API
-          run: cd customer-data-api-java && make run-local
+
+        - name: Build API image
+          run: cd customer-data-api-java && docker build -t customer-api-server . && docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server
     cypress-run:
         needs: build
         runs-on: ubuntu-22.04
