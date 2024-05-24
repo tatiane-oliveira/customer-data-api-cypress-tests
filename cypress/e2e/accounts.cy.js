@@ -112,6 +112,16 @@ describe("GET /accounts/v1/accounts", () => {
       });
     });
 
+    it("should fails with 404 (Not found) status code when consent Id is invalid", () => {
+      const scope = `accounts consent:urn:bank:${generateClientId()}`;
+      const token = generateToken(scope);
+      encodeToken(token.header, token.payload);
+      cy.getAccounts(Cypress.env("token")).then((response) => {
+        cy.log(JSON.stringify(response.body));
+        expect(response.status).to.be.eq(404);
+      });
+    });
+
     it("should fails with 401 (Unauthorized) status code when Authorization header is invalid", () => {
       const token = generateToken("accounts");
       encodeToken(token.header, token.payload);
