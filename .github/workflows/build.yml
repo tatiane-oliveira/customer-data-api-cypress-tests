@@ -19,15 +19,14 @@ jobs:
         - name: Checkout
           run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
 
+        - name: Change folder
+          run: cd customer-data-api-java 
+
         - name: Build docker
-          run:  |
-            cd customer-data-api-java
-            docker build -t customer-api-server .
+          run: docker build -t customer-api-server .
           
         - name: Run container in background
-          run:  |
-            docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server 
-            cd ..
+          run: docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server && cd ..
 
         - name: Cypress run
           uses: cypress-io/github-action@v6
