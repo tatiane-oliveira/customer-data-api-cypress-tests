@@ -17,12 +17,12 @@ jobs:
           uses: gradle/actions/setup-gradle@v3
 
         - name: Checkout
-          run: |
-            git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git 
-            cd customer-data-api-java
+          run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
 
         - name: Build docker
-          run:  docker build -t customer-api-server .
+          run:  |
+            cd customer-data-api-java
+            docker build -t customer-api-server .
           
         - name: Run container in background
           run:  |
