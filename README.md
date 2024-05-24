@@ -34,15 +34,19 @@ npx allure serve
 ## Project Structure
 ---
 ``` bash
-📂allure-results/        # Contains the data files in the Allure format, which are generated using the npx allure serve command
-📂cypress/               # Root folder for Cypress project
-  📂e2e/                 # Contains the spec files
-  📂fixtures/            # Store static data files that are used by tests
-  📂support/             # Contains files that support the tests, such as reusable functions or global configuration 
-📂node_modules/          # Contains the project's dependencies, which are installed using the npm install command
-📄cypress.config.js      # Configs and Cypress.task functions
-📄.env                   # Environment variables
-📄.gitignore             # Files and dirs ignored by git
-📄package-lock.json      # Dependencies of dependencies
-📄package.json           # Dependencies of the project
+📂allure-results/                     # Contains the data files in the Allure format, which are generated using the npx allure serve command
+📂cypress/                            # Root folder for Cypress project
+  📂e2e/                              # Contains the spec files
+  📂fixtures/                         # Store static data files that are used by tests
+  📂support/                          # Contains files that support the tests, such as reusable functions or global configuration 
+📂docs/                               # Documentation folder
+  📂bug-reports/                      # Bug report files
+  📂test-cases/                       # Test cases designed
+📄documentation-improviments.md       # API documentation improviments 
+📂node_modules/                       # Contains the project's dependencies, which are installed using the npm install command
+📄cypress.config.js                   # Configs and Cypress.task functions
+📄.env                                # Environment variables
+📄.gitignore                          # Files and dirs ignored by git
+📄package-lock.json                   # Dependencies of dependencies
+📄package.json                        # Dependencies of the project
 ```
