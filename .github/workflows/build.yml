@@ -20,10 +20,10 @@ jobs:
           run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git
 
         - name: Change folder
-          run: cd customer-data-api-java 
+          run: cd customer-data-api-java && ./gradlew clean shadowJar  
 
         - name: Build docker
-          run: docker build -t customer-api-server .
+          run:  docker build -t customer-api-server .
           
         - name: Run container in background
           run: docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server && cd ..
