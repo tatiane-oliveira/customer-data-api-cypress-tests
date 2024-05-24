@@ -17,13 +17,17 @@ jobs:
           uses: gradle/actions/setup-gradle@v3
 
         - name: Checkout
-          run: git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git && cd customer-data-api-java
+          run: |
+            git clone https://bitbucket.org/thiagohcn/customer-data-api-java.git 
+            cd customer-data-api-java
 
         - name: Build docker
           run:  docker build -t customer-api-server .
           
         - name: Run container in background
-          run:  docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server && cd ..
+          run:  |
+            docker run -d -p 8080:8080 --name customer-api-server -t customer-api-server 
+            cd ..
 
         - name: Cypress run
           uses: cypress-io/github-action@v6
